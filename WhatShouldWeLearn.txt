@@ -8,3 +8,10 @@ Machine Learning
 Python and R are both good with Machine Learning
 Python	-Data Science From Scratch(book)
 R	-Machine Learning with R(book)
+
+
+A lot of time spending on these section:
+-Find Data(Webscrape,APIs,CSVs)
+-Clean the data( remove NaNs and Infinities, and string and so on).
+-Scikit Learn Cheet Sheet
+	-http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html
