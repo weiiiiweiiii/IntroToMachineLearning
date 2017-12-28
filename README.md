@@ -9,4 +9,5 @@ This repository includes:
 2. Tensorflow For Poets
     -https://codelabs.developers.google.com/codelabs/tensorflow-for-poets/#0
     
-3. Advice of Learning Machine Learning
+3. Road Map of Learning Machine Learning
+    -https://www.youtube.com/watch?v=MOdlp1d0PNA
