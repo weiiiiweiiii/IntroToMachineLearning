@@ -1,0 +1,10 @@
+Machine Learning
+
+1. Linear Algebra
+2. Calculus
+3. Statistic & Probabilty
+#MIT Open Course have all three above
+
+Python and R are both good with Machine Learning
+Python	-Data Science From Scratch(book)
+R	-Machine Learning with R(book)
