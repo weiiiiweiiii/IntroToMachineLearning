@@ -37,15 +37,19 @@ header = ["color", "diameter", "label"]
 
 def unique_vals(rows, col):
     """Find the unique values for a column in a dataset."""
+    #regular representation
+    #set will only get unique element like 1,1,2,3, there will be 1,2,3
+    #In this way we could interact with Question Class to get out the best impurity
     return set([row[col] for row in rows])
 
 #######
 # Demo:
 # unique_vals(training_data, 0)
 # unique_vals(training_data, 1)
+# Beacuse we only have two columns to compute
 #######
 
-
+#It gets how many class we have and the number of each class in the data set
 def class_counts(rows):
     """Counts the number of each type of example in a dataset."""
     counts = {}  # a dictionary of label -> count.
@@ -65,6 +69,7 @@ def class_counts(rows):
 
 def is_numeric(value):
     """Test if a value is numeric."""
+    # Treat the numrical value and string or something value differently 
     return isinstance(value, int) or isinstance(value, float)
 
 #######
@@ -74,6 +79,8 @@ def is_numeric(value):
 #######
 
 
+#Set up a question and give out the answer
+#In this way to help calculate impurity
 class Question:
     """A Question is used to partition a dataset.
 
@@ -87,6 +94,7 @@ class Question:
         self.column = column
         self.value = value
 
+    #use for prediction and partition
     def match(self, example):
         # Compare the feature value in an example to the
         # feature value in this question.
@@ -96,6 +104,7 @@ class Question:
         else:
             return val == self.value
 
+    #just give a readble format
     def __repr__(self):
         # This is just a helper method to print
         # the question in a readable format.
@@ -118,6 +127,8 @@ class Question:
 #######
 
 
+#by each question. Split the data into two sets TRUE and False
+#It's like two branchs of each question node
 def partition(rows, question):
     """Partitions a dataset.
 
@@ -156,6 +167,11 @@ def gini(rows):
         prob_of_lbl = counts[lbl] / float(len(rows))
         impurity -= prob_of_lbl**2
     return impurity
+#For example:
+#sample data are {1,1,2,3}   p1 = 1/2  p2 = 1/4  p3 = 1/4
+#gini impurity = 1-sigema(pi)**2    i = {1,2,3}
+#gini impurity = 1-(1/2**2 + 1/4**2 + 1/4**2) = 0.625
+
 
 
 #######
@@ -185,12 +201,15 @@ def gini(rows):
 # gini(lots_of_mixing)
 #######
 
+#We use this information gain as the tips to pick out the most first decision
 def info_gain(left, right, current_uncertainty):
     """Information Gain.
 
     The uncertainty of the starting node, minus the weighted impurity of
     two child nodes.
     """
+    #weighted uncertainty if for if the left gini impurity is 1, the number
+    #will be negative which doesn't make sense. 
     p = float(len(left)) / (len(left) + len(right))
     return current_uncertainty - p * gini(left) - (1 - p) * gini(right)
 
@@ -229,6 +248,7 @@ def info_gain(left, right, current_uncertainty):
 #######
 
 
+#Combination of all sub small proccesure of find the bet decison node
 def find_best_split(rows):
     """Find the best question to ask by iterating over every feature / value
     and calculating the information gain."""
@@ -272,6 +292,7 @@ def find_best_split(rows):
 # where I used '>='.
 #######
 
+#The dead corner of the branch
 class Leaf:
     """A Leaf node classifies data.
 
@@ -282,7 +303,7 @@ class Leaf:
     def __init__(self, rows):
         self.predictions = class_counts(rows)
 
-
+#each decision node
 class Decision_Node:
     """A Decision Node asks a question.
 
@@ -297,7 +318,7 @@ class Decision_Node:
         self.true_branch = true_branch
         self.false_branch = false_branch
 
-
+#The whole decision tree which is a decision Node with more decision Node inside
 def build_tree(rows):
     """Builds the tree.
 
@@ -449,7 +470,7 @@ NOTES:
 #Begin with calculating the uncertainty of the starting set( Impurity)
 #After that we will try to compute the Impurity of child's node will give us
 
-#Information gain = parent Impurity - (Average of child's node Impurity)
+#Information gain = parent Impurity - (weighted of child's node Impurity)
 #We will keep track of the gain of each node.
 #Then the most information gain will get result of The very first good question
 
